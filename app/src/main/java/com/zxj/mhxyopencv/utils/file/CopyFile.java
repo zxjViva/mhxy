@@ -44,7 +44,7 @@ public class CopyFile {
     public static File copyFileFromAssets(Context context, String assetsPath, String savePath){
         File file = new File(savePath);
         try {
-            InputStream is = context.getAssets().open(assetsPath);
+            InputStream is = context.getAssets().open(assetsPath,Context.MODE_WORLD_READABLE);
             FileOutputStream fos = new FileOutputStream(file);
             byte[] buffer = new byte[1024];
             int byteCount = 0;

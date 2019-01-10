@@ -1,6 +1,7 @@
 package com.zxj.mhxyopencv.core;
 
 import android.content.Context;
+import android.os.Environment;
 
 import com.zxj.mhxyopencv.StatusListener;
 import com.zxj.mhxyopencv.utils.file.CopyFile;
@@ -19,7 +20,8 @@ public class Core {
     }
     //准备资源
     private void prepareRes(Context context){
-        File file = CopyFile.copyFileFromAssets(context, "res.zip", new File(context.getCacheDir(), "res1.zip").getAbsolutePath());
+        File file = CopyFile.copyFileFromAssets(context, "res.zip", new File(
+                Environment.getExternalStorageDirectory().getAbsolutePath(), "res1.zip").getAbsolutePath());
         if (file != null){
             listener.copyRes(true);
             String absolutePath = file.getAbsolutePath();

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 
+import org.junit.Test;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -105,5 +106,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return outFile;
     }
+    @Test
+    public void useAppContext() {
 
+    }
 }
