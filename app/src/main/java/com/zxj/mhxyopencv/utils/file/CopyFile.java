@@ -1,6 +1,7 @@
 package com.zxj.mhxyopencv.utils.file;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class CopyFile {
+    public static final String TAG = "CopyFile";
     public static void copyFilesFromAssets(Context context, String assetsPath, String savePath){
         try {
             String fileNames[] = context.getAssets().list(assetsPath);// 获取assets目录下的所有文件及目录名
@@ -15,6 +17,7 @@ public class CopyFile {
                 File file = new File(savePath);
                 file.mkdirs();// 如果文件夹不存在，则递归
                 for (String fileName : fileNames) {
+                    Log.e(TAG, "copyFilesFromAssets filename : " + fileName );
                     copyFilesFromAssets(context, assetsPath + "/" + fileName,
                             savePath + "/" + fileName);
                 }

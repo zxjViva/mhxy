@@ -25,6 +25,8 @@ import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     // Used to load the 'native-lib' library on application startup.
     static {
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -42,14 +44,11 @@ public class MainActivity extends AppCompatActivity {
         ivSrc = findViewById(R.id.src);
         ivTemp = findViewById(R.id.temp);
         OpenCVLoader.initDebug();
-        File srcFile = copyAssetAndWrite("map.png");
-        File targetFile = copyAssetAndWrite("greenDot.png");
+        File srcFile = copyAssetAndWrite("zhandou.png");
+        File targetFile = copyAssetAndWrite("key_fighting.png");
         try {
-            InputStream openSrc = getAssets().open("map.png");
-            InputStream openTarget = getAssets().open("greenDot.png");
             ivSrc.setImageBitmap(BitmapFactory.decodeStream(new FileInputStream(srcFile)));
             ivTarget.setImageBitmap(BitmapFactory.decodeStream(new FileInputStream(targetFile)));
-            openSrc.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,13 +60,15 @@ public class MainActivity extends AppCompatActivity {
         Mat g_result = new Mat(result_rows, result_cols, CvType.CV_32FC1);
         Imgproc.matchTemplate(g_src, g_tem, g_result, Imgproc.TM_CCORR_NORMED);
         Core.normalize(g_result, g_result, 0, 1, Core.NORM_MINMAX, -1, new Mat());
-        Point matchLocation = new Point();
         Core.MinMaxLocResult mmlr = Core.minMaxLoc(g_result);
+        Point matchLocation = new Point();
         matchLocation = mmlr.maxLoc; // 此处使用maxLoc还是minLoc取决于使用的匹配算法
         Imgproc.rectangle(g_src, matchLocation,
                 new Point(matchLocation.x + g_tem.cols(), matchLocation.y + g_tem.rows()),
                 new Scalar(0, 0, 0, 0));
-        File file = new File(getCacheDir().getAbsolutePath(), "temp.png");
+        Log.e(TAG, "onCreate: x " +  matchLocation.x);
+        Log.e(TAG, "onCreate: y " +  matchLocation.y);
+        File file = new File(getCacheDir().getAbsolutePath(), "temp3.png");
         Log.e("zxj1", "onCreate: " + file.getAbsolutePath() );
         Imgcodecs.imwrite(file.getAbsolutePath(), g_src);
         try {
